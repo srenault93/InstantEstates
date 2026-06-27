@@ -80,6 +80,37 @@ namespace InstantEstates.Common.Building
             return top;
         }
 
+        /// <summary>
+        /// One pagoda tier: a fully walled room with a WIDE overhanging roof at its
+        /// ceiling (eaves project past the side walls). Returns the floor row for the
+        /// next, narrower tier to stack on top.
+        /// </summary>
+        public int PagodaTier(int cx, int floorY, int roomHalf, int roomHeight, int roofHalf,
+                              char roof, char frame, char wall)
+        {
+            int top = floorY - roomHeight + 1;
+            int left = cx - roomHalf, right = cx + roomHalf;
+
+            FillWalls(left, top, right, floorY, wall); // interior backing
+            VLine(left, top, floorY, frame);           // left wall
+            VLine(right, top, floorY, frame);          // right wall
+            HLine(left, right, floorY, frame);         // floor
+
+            int ey = top - 1;
+            HLine(cx - roofHalf, cx + roofHalf, ey, roof);             // wide eave (overhang)
+            HLine(cx - roofHalf + 1, cx + roofHalf - 1, ey - 1, roof); // upper roof row
+            return ey - 1; // next tier's floor rests on the upper roof row
+        }
+
+        /// <summary>A pointed roof cap with a short finial, for the top of a pagoda.</summary>
+        public void RoofCap(int cx, int baseY, int half, char roof, char finial)
+        {
+            Roof(cx, baseY, half, half + 1, roof);
+            int apexY = baseY - half;
+            T(cx, apexY - 1, finial);
+            T(cx, apexY - 2, finial);
+        }
+
         /// <summary>Carves a 3-tall door opening sitting on the given floor row, at column x.</summary>
         public void DoorGap(int x, int floorY)
         {

@@ -44,4 +44,39 @@ Items: {
 		DisplayName: Architect Spawner
 		Tooltip: ""
 	}
+
+	DynastyCottageDeed: {
+		DisplayName: Dynasty Cottage Deed
+		Tooltip: ""
+	}
+
+	DynastyManorDeed: {
+		DisplayName: Dynasty Manor Deed
+		Tooltip: ""
+	}
+
+	GrandPagodaDeed: {
+		DisplayName: Grand Pagoda Deed
+		Tooltip: ""
+	}
+
+	OutpostBaseDeed: {
+		DisplayName: Outpost Base Deed
+		Tooltip: ""
+	}
+
+	PagodaPalaceDeed: {
+		DisplayName: Pagoda Palace Deed
+		Tooltip: ""
+	}
+
+	PagodaTowerDeed: {
+		DisplayName: Pagoda Tower Deed
+		Tooltip: ""
+	}
+
+	ToriiGateDeed: {
+		DisplayName: Torii Gate Deed
+		Tooltip: ""
+	}
 }
