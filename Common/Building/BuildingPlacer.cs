@@ -64,8 +64,8 @@ namespace InstantEstates.Common.Building
                         Tile t = Main.tile[wx, wy];
                         t.HasTile = true;
                         t.TileType = tileType;
-                        t.Slope = SlopeType.Solid;
                         t.IsHalfBlock = false;
+                        t.Slope = def.SlopeLegend.TryGetValue(c, out SlopeType slope) ? slope : SlopeType.Solid;
                     }
                 }
             }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terraria.ID;
 
 namespace InstantEstates.Common.Building
 {
@@ -38,6 +39,7 @@ namespace InstantEstates.Common.Building
         public Dictionary<char, ushort> TileLegend = new();   // char -> block TileID
         public Dictionary<char, int> PlatformLegend = new();  // char -> platform style (placed as TileID.Platforms)
         public Dictionary<char, ushort> WallLegend = new();   // char -> WallID
+        public Dictionary<char, SlopeType> SlopeLegend = new(); // char -> slope applied to that block (roof edges, etc.)
 
         public List<Furniture> Furniture = new();
 

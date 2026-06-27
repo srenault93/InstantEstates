@@ -14,7 +14,7 @@ namespace InstantEstates.Content.Items
     public class EstateDeed : ModItem
     {
         /// <summary>The building this deed places. Override for other deed variants.</summary>
-        public virtual BuildingDef Building => StarterCottage.Def;
+        public virtual BuildingDef Building => DynastyCottage.Def;
 
         public override void SetDefaults()
         {
