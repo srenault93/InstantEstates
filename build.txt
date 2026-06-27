@@ -1,0 +1,3 @@
+displayName = Instant Estates
+author = srena
+version = 0.1.0

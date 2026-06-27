@@ -1,0 +1,47 @@
+Mods: {
+	InstantEstates: {
+		Items: {
+			EstateDeed: {
+				DisplayName: Estate Deed
+				Tooltip:
+					'''
+					Use it to magically clear a plot of land
+					Removes everything softer than Ebonstone / Crimstone
+					Sold by the Architect
+					'''
+			}
+		}
+
+		NPCs.Architect.DisplayName: Architect
+	}
+}
+
+NPCs: {
+	Architect: {
+		TownNPCMood: {
+			NoHome: I hate not having a home.
+			Content: I am content.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+
+		DisplayName: Architect
+		Census.SpawnCondition: Conditions unknown
+	}
+}
+
+Items: {
+	EstateDeed: {
+		Tooltip: ""
+		DisplayName: Estate Deed
+	}
+
+	ArchitectSpawner: {
+		DisplayName: Architect Spawner
+		Tooltip: ""
+	}
+}

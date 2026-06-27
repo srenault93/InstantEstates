@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Imports the tModLoader build shim from the ModSources folder (tML convention). -->
+  <Import Project="..\tModLoader.targets" />
+</Project>

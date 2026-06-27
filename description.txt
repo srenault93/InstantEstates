@@ -1,0 +1,3 @@
+Instant Estates adds magic deeds that instantly clear terrain and raise a prebuilt base.
+A traveling architect NPC sells them. Terrain softer than Ebonstone/Crimstone is cleared;
+tougher blocks (dungeon, ores, lihzahrd, etc.) are left untouched.
