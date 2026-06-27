@@ -75,7 +75,13 @@ namespace InstantEstates.Content.NPCs
         public override void AddShops()
         {
             new NPCShop(Type, ShopName)
-                .Add<EstateDeed>()
+                .Add<DynastyCottageDeed>()
+                .Add<DynastyManorDeed>()
+                .Add<GrandPagodaDeed>()
+                .Add<PagodaTowerDeed>()
+                .Add<PagodaPalaceDeed>()
+                .Add<ToriiGateDeed>()
+                .Add<OutpostBaseDeed>()
                 .Register();
         }
     }

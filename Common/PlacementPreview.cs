@@ -24,8 +24,8 @@ namespace InstantEstates.Common
             if (player is null || !player.active || player.dead)
                 return;
 
-            // Only while holding the deed, and not when staring at the fullscreen map.
-            if (player.HeldItem?.ModItem is not EstateDeed deed || Main.mapFullscreen)
+            // Only while holding a deed, and not when staring at the fullscreen map.
+            if (player.HeldItem?.ModItem is not BuildingDeed deed || Main.mapFullscreen)
                 return;
 
             BuildingDef def = deed.Building;
