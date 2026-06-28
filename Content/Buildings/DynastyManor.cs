@@ -3,35 +3,52 @@ using Terraria.ID;
 
 namespace InstantEstates.Content.Buildings
 {
-    /// <summary>Screenshot 151958: a wide two-floor Dynasty house with a red gable roof. Approximation.</summary>
+    /// <summary>
+    /// Screenshot 151958, built to the provided spec: a 48-wide two-floor Japanese
+    /// house. Outer Dynasty-wood shell, partition walls 3 in from each edge with a
+    /// door on BOTH sides of every floor, a Dynasty platform mid-floor, white Dynasty
+    /// interior walls, themed Dynasty furniture, and a wide tiered red roof capped
+    /// with Dynasty wood.
+    /// </summary>
     public static class DynastyManor
     {
         public static readonly BuildingDef Def = Build();
 
         private static BuildingDef Build()
         {
-            const int cx = 14;
-            var g = new GridBuilder(29, 22);
+            var g = new GridBuilder(48, 34);
 
-            g.Box(1, 8, 27, 21, 'D');          // two-story outer shell
-            g.FillWalls(2, 9, 26, 20, 'w');    // interior backing
-            g.HLine(2, 26, 14, 'D');           // mid floor
-            g.Roof(cx, 7, 14, 5, 'R');         // red gable roof
-            g.DoorGap(1, 21);                  // ground-floor door
+            // Shell: side walls, ground floor, top ceiling (under the roof).
+            g.VLine(1, 13, 31, 'D');
+            g.VLine(46, 13, 31, 'D');
+            g.HLine(1, 46, 31, 'D');
+            g.HLine(1, 46, 13, 'D');
+
+            // Mid floor is a Dynasty platform you can pass through.
+            g.HLine(2, 45, 22, 'P');
+
+            // White Dynasty interior (both floors).
+            g.FillWalls(2, 14, 45, 30, 'w');
+
+            // Partition walls 3 in from each edge, with doors carved per floor.
+            g.VLine(4, 14, 30, 'D');
+            g.VLine(43, 14, 30, 'D');
+            g.DoorGap(4, 31); g.DoorGap(43, 31);   // ground floor
+            g.DoorGap(4, 22); g.DoorGap(43, 22);   // upper floor
+
+            // Wide tiered red hip roof, capped with Dynasty wood.
+            int rx0 = 0, rx1 = 47, ry = 12;
+            while (rx1 - rx0 >= 4) { g.HLine(rx0, rx1, ry, 'R'); rx0 += 3; rx1 -= 3; ry--; }
+            g.HLine(rx0, rx1, ry, 'D');
 
             var def = new BuildingDef { Tiles = g.Tiles(), Walls = g.Walls() };
             def.TileLegend['D'] = TileID.DynastyWood;
             def.TileLegend['R'] = TileID.RedDynastyShingles;
             def.WallLegend['w'] = WallID.WhiteDynasty;
+            def.PlatformLegend['P'] = ItemID.DynastyPlatform;
 
-            // Ground floor (floor row 21).
-            Furnish.LivableRoom(def, doorX: 1, floorY: 21, torchLX: 6, torchRX: 22, tableX: 4, chairX: 8);
-            // Upper floor (floor row 14).
-            def.Furniture.Add(new Furniture(FurnitureKind.Torch, TileID.Torches, 6, 13));
-            def.Furniture.Add(new Furniture(FurnitureKind.Torch, TileID.Torches, 22, 13));
-            def.Furniture.Add(new Furniture(FurnitureKind.Object, TileID.Tables, 4, 13));
-            def.Furniture.Add(new Furniture(FurnitureKind.Object, TileID.Chairs, 8, 13));
-
+            Furnish.DynastyRoom(def, leftDoorX: 4, rightDoorX: 43, floorY: 31, leftInner: 6, rightInner: 41);
+            Furnish.DynastyRoom(def, leftDoorX: 4, rightDoorX: 43, floorY: 22, leftInner: 6, rightInner: 41);
             return def;
         }
     }

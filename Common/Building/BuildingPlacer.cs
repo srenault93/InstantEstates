@@ -53,9 +53,10 @@ namespace InstantEstates.Common.Building
                     char c = line[col];
                     int wx = fp.X + col, wy = fp.Y + row;
 
-                    if (def.PlatformLegend.TryGetValue(c, out int platformStyle))
+                    if (def.PlatformLegend.TryGetValue(c, out int platformItem))
                     {
-                        WorldGen.PlaceTile(wx, wy, TileID.Platforms, mute: true, forced: true, style: platformStyle);
+                        Item s = ContentSamples.ItemsByType[platformItem];
+                        WorldGen.PlaceTile(wx, wy, s.createTile, mute: true, forced: true, style: s.placeStyle);
                         continue;
                     }
 
@@ -79,13 +80,24 @@ namespace InstantEstates.Common.Building
                 switch (f.Kind)
                 {
                     case FurnitureKind.Door:
-                        WorldGen.PlaceDoor(wx, wy, TileID.ClosedDoor);
+                        int doorTile = f.ItemId > 0 ? ContentSamples.ItemsByType[f.ItemId].createTile : TileID.ClosedDoor;
+                        WorldGen.PlaceDoor(wx, wy, doorTile);
                         break;
+
                     case FurnitureKind.Torch:
-                        WorldGen.PlaceTile(wx, wy, TileID.Torches, mute: true, forced: true, style: f.Style);
+                        WorldGen.PlaceTile(wx, wy, f.Type, mute: true, forced: true, style: f.Style);
                         break;
+
                     default:
-                        WorldGen.PlaceObject(wx, wy, f.Type, mute: true, style: f.Style);
+                        if (f.ItemId > 0)
+                        {
+                            Item s = ContentSamples.ItemsByType[f.ItemId];
+                            WorldGen.PlaceObject(wx, wy, s.createTile, mute: true, style: s.placeStyle);
+                        }
+                        else
+                        {
+                            WorldGen.PlaceObject(wx, wy, f.Type, mute: true, style: f.Style);
+                        }
                         break;
                 }
             }

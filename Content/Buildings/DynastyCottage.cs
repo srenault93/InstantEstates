@@ -5,8 +5,8 @@ namespace InstantEstates.Content.Buildings
 {
     /// <summary>
     /// Screenshot 152053: a small Japanese cottage with a wide red-shingle overhanging
-    /// roof, a pointed gable cap, Dynasty-wood frame, white interior walls, door, torches,
-    /// table + chair. Livable.
+    /// roof, a pointed gable cap, doors on both sides, white Dynasty interior, and themed
+    /// Dynasty furniture. Livable.
     /// </summary>
     public static class DynastyCottage
     {
@@ -14,19 +14,19 @@ namespace InstantEstates.Content.Buildings
 
         private static BuildingDef Build()
         {
-            const int cx = 8;
-            var g = new GridBuilder(17, 15);
+            const int cx = 9;
+            var g = new GridBuilder(19, 16);
 
-            int f = g.PagodaTier(cx, 13, 6, 5, 8, 'R', 'D', 'w'); // room + wide red eave
-            g.RoofCap(cx, f - 1, 4, 'R', 'D');                    // gable cap + finial
-            g.DoorGap(14, 13);                                    // door in right wall
+            int f = g.PagodaTier(cx, 13, 7, 6, 9, 'R', 'D', 'w');
+            g.RoofCap(cx, f - 1, 4, 'R', 'D');
+            g.DoorGap(2, 13); g.DoorGap(16, 13);
 
             var def = new BuildingDef { Tiles = g.Tiles(), Walls = g.Walls() };
             def.TileLegend['D'] = TileID.DynastyWood;
             def.TileLegend['R'] = TileID.RedDynastyShingles;
             def.WallLegend['w'] = WallID.WhiteDynasty;
 
-            Furnish.LivableRoom(def, doorX: 14, floorY: 13, torchLX: 5, torchRX: 11, tableX: 4, chairX: 7);
+            Furnish.DynastyRoom(def, leftDoorX: 2, rightDoorX: 16, floorY: 13, leftInner: 4, rightInner: 14);
             return def;
         }
     }

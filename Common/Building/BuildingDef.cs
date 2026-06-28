@@ -3,43 +3,42 @@ using Terraria.ID;
 
 namespace InstantEstates.Common.Building
 {
-    /// <summary>How a piece of furniture is placed (different vanilla calls per kind).</summary>
-    public enum FurnitureKind
-    {
-        Object, // generic multitile: table, chair, chest, workbench, bookcase...
-        Door,   // 1x3 door
-        Torch,  // light source
-    }
+    public enum FurnitureKind { Object, Door, Torch }
 
-    /// <summary>A single furniture placement, positioned relative to the building's top-left.</summary>
+    /// <summary>
+    /// A furniture placement. If <see cref="ItemId"/> is set, the tile type and style
+    /// are resolved from that item at placement time (so themed sets like Dynasty
+    /// furniture place correctly without hard-coding style numbers).
+    /// </summary>
     public struct Furniture
     {
-        public ushort Type;        // TileID
-        public int Style;          // object style (e.g. wood = 0)
-        public int X;              // column relative to building origin
-        public int Y;              // row relative to building origin (anchor cell)
         public FurnitureKind Kind;
+        public ushort Type;  // direct tile type (when ItemId == 0)
+        public int Style;    // direct style (when ItemId == 0)
+        public int ItemId;   // resolve tile+style from this item if > 0
+        public int X, Y;     // relative to building origin
 
-        public Furniture(FurnitureKind kind, ushort type, int x, int y, int style = 0)
-        {
-            Kind = kind; Type = type; X = x; Y = y; Style = style;
-        }
+        public static Furniture Object(int itemId, int x, int y)
+            => new Furniture { Kind = FurnitureKind.Object, ItemId = itemId, X = x, Y = y };
+        public static Furniture Door(int x, int y, int itemId = 0)
+            => new Furniture { Kind = FurnitureKind.Door, ItemId = itemId, X = x, Y = y };
+        public static Furniture Torch(int x, int y, ushort type = TileID.Torches, int style = 0)
+            => new Furniture { Kind = FurnitureKind.Torch, Type = type, Style = style, X = x, Y = y };
     }
 
     /// <summary>
-    /// A data-defined building. Two char-grid layers (background walls + foreground
-    /// blocks/platforms) plus a list of multitile furniture. Symbols are resolved via
-    /// the legends. A blank/space char means "nothing" in that layer.
+    /// A data-defined building: foreground tile layer + background wall layer (char
+    /// grids resolved via legends) plus a furniture list.
     /// </summary>
     public class BuildingDef
     {
-        public string[] Tiles;   // foreground: blocks & platforms
-        public string[] Walls;   // background walls (optional, same dimensions)
+        public string[] Tiles;
+        public string[] Walls;
 
-        public Dictionary<char, ushort> TileLegend = new();   // char -> block TileID
-        public Dictionary<char, int> PlatformLegend = new();  // char -> platform style (placed as TileID.Platforms)
-        public Dictionary<char, ushort> WallLegend = new();   // char -> WallID
-        public Dictionary<char, SlopeType> SlopeLegend = new(); // char -> slope applied to that block (roof edges, etc.)
+        public Dictionary<char, ushort> TileLegend = new();    // char -> block TileID
+        public Dictionary<char, int> PlatformLegend = new();   // char -> platform ITEM id (resolved to tile+style)
+        public Dictionary<char, ushort> WallLegend = new();    // char -> WallID
+        public Dictionary<char, SlopeType> SlopeLegend = new();// char -> block slope
 
         public List<Furniture> Furniture = new();
 

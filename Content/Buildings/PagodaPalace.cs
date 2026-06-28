@@ -11,21 +11,21 @@ namespace InstantEstates.Content.Buildings
         private static BuildingDef Build()
         {
             const int cx = 14;
-            var g = new GridBuilder(31, 42);
+            var g = new GridBuilder(31, 46);
 
-            int f = g.PagodaTier(cx, 41, 12, 6, 14, 'B', 'D', 'w');
-            f = g.PagodaTier(cx, f, 10, 6, 12, 'B', 'D', 'w');
-            f = g.PagodaTier(cx, f, 7, 5, 9, 'B', 'D', 'w');
-            f = g.PagodaTier(cx, f, 5, 5, 7, 'B', 'D', 'w');
+            int f = g.PagodaTier(cx, 45, 12, 8, 14, 'B', 'D', 'w');
+            f = g.PagodaTier(cx, f, 10, 7, 12, 'B', 'D', 'w');
+            f = g.PagodaTier(cx, f, 7, 7, 9, 'B', 'D', 'w');
+            f = g.PagodaTier(cx, f, 5, 6, 7, 'B', 'D', 'w');
             g.RoofCap(cx, f - 1, 5, 'B', 'D');
-            g.DoorGap(2, 41);
+            g.DoorGap(2, 45); g.DoorGap(26, 45);
 
             var def = new BuildingDef { Tiles = g.Tiles(), Walls = g.Walls() };
             def.TileLegend['D'] = TileID.DynastyWood;
             def.TileLegend['B'] = TileID.BlueDynastyShingles;
             def.WallLegend['w'] = WallID.WhiteDynasty;
 
-            Furnish.LivableRoom(def, doorX: 2, floorY: 41, torchLX: 6, torchRX: 22, tableX: 5, chairX: 9);
+            Furnish.DynastyRoom(def, leftDoorX: 2, rightDoorX: 26, floorY: 45, leftInner: 3, rightInner: 25);
             return def;
         }
     }
